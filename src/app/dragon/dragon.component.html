@@ -1,0 +1,71 @@
+
+<div class="container">
+  <div class="reglist">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        
+        <th>ID</th>
+        <th>Name</th>
+        <th>Coulour</th>
+        <th>Age</th>
+        <th>Location</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of dragons; let i = index; trackBy: trackByFn">
+        <th scope="row">{{ item.id}}</th>
+        <td>{{ item.name }}</td>
+        <td>{{ item.colour }}</td>
+        <td>{{ item.age}}</td>
+        <td>{{ item?.location?.name}}</td>
+        <td>
+          <button type="button" class="btn btn-info" (click)="onEdit(i)">Edit</button>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" (click)="onDelete(item.id,i)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="text-right">
+      <button type="submit" class="btn btn-primary" (click)="onNew()">New</button>
+    </div>
+  </div>
+  <br>
+  <div class="regentry" *ngIf="showNew">
+    <form (ngSubmit)="onSave()">
+      <div class="form-group row">
+        <label for="name-input" class="col-2 col-form-label">Name</label>
+        <div class="col-10">
+          <input class="form-control" type="text" [(ngModel)]="dragon.name" name="name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="colour-input" class="col-2 col-form-label">Coulour</label>
+        <div class="col-10">
+          <input class="form-control" type="text" [(ngModel)]="dragon.colour" name="colour">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="colour-input" class="col-2 col-form-label">Location</label>
+        <select class="col-10 browser-default custom-select" [compareWith]="compareByLocationId" [(ngModel)]="dragon.location" name="location">   
+        <option value="" disabled selected>Select a location</option>
+        <option *ngFor="let item of locations" [ngValue]="item">{{item.name}}</option>
+      </select>
+      </div>
+
+      <div class="form-group row">
+        <label for="student-number-input" class="col-2 col-form-label">Age</label>
+        <div class="col-10">
+          <input class="form-control" type="text" [(ngModel)]="dragon.age" name="age">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success">{{submitType}}</button>
+      <button type="submit" class="btn btn-primary" (click)="onCancel()">Cancel</button>
+    </form>
+  </div>
+</div>
